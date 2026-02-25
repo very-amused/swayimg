@@ -66,7 +66,8 @@ void app_switch_mode(const char* name)
         const ssize_t index = str_index(mode_names, name, 0);
         if (index >= 0) {
             next = index;
-					// keep compatibility w/ existing behavior of `mode` (no param) switching to prev mode
+            // keep compatibility w/ existing behavior of `mode` (no param)
+            // switching to prev mode
         } else if (strcmp(name, "prev") != 0) {
             info_update(info_status, "Invalid mode: %s", name);
             app_redraw();
@@ -295,7 +296,7 @@ void app_destroy(void)
     slideshow_destroy();
     viewer_destroy();
     ui_destroy();
-		imglist_print_marked_paths();
+    imglist_print_marked_paths();
     imglist_destroy();
     info_destroy();
     font_destroy();

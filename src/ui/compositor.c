@@ -282,7 +282,8 @@ static bool hyprland_overlay(const struct wndrect* wnd, char** app_id)
     }
 
     // set floating
-    snprintf(buf, sizeof(buf), "keyword windowrule float on, match:class %s", *app_id);
+    snprintf(buf, sizeof(buf), "keyword windowrule float on, match:class %s",
+             *app_id);
     response = hyprland_request(buf);
     if (!response) {
         return false;
@@ -290,8 +291,9 @@ static bool hyprland_overlay(const struct wndrect* wnd, char** app_id)
     json_object_put(response);
 
     // set position
-    snprintf(buf, sizeof(buf), "keyword windowrule move %zd %zd, match:class %s",
-             wnd->x, wnd->y, *app_id);
+    snprintf(buf, sizeof(buf),
+             "keyword windowrule move %zd %zd, match:class %s", wnd->x, wnd->y,
+             *app_id);
     response = hyprland_request(buf);
     if (!response) {
         return false;
@@ -299,8 +301,9 @@ static bool hyprland_overlay(const struct wndrect* wnd, char** app_id)
     json_object_put(response);
 
     // set size
-    snprintf(buf, sizeof(buf), "keyword windowrule size %zd %zd, match:class %s",
-            wnd->width, wnd->height, *app_id);
+    snprintf(buf, sizeof(buf),
+             "keyword windowrule size %zd %zd, match:class %s", wnd->width,
+             wnd->height, *app_id);
     response = hyprland_request(buf);
     if (!response) {
         return false;

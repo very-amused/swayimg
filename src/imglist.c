@@ -8,6 +8,7 @@
 #include "array.h"
 #include "buildcfg.h"
 #include "fs.h"
+#include "src/image.h"
 #include "src/list.h"
 
 #include <assert.h>
@@ -691,7 +692,12 @@ void imglist_clear_marks(void) {
 void imglist_write_marked_paths(void) {
 	list_for_each(ctx.marked_images, struct image_mark, mark) {
 		const char *img_src = mark->img->source;
-		// TODO: validate that img_src is actually a path
+		if (strncmp(img_src, LDRSRC_STDIN, LDRSRC_STDIN_LEN) == 0 ||
+				strncmp(img_src, LDRSRC_EXEC, LDRSRC_EXEC_LEN) == 0) {
+			fprintf(stderr, "WARNING: Unable to resolve filesystem path for mark %s\n", img_src);
+			continue;
+		}
+
 		printf("%s\n", img_src);
 	}
 }

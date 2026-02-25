@@ -689,7 +689,7 @@ void imglist_clear_marks(void) {
 	}
 }
 
-void imglist_write_marked_paths(void) {
+void imglist_print_marked_paths(void) {
 	list_for_each(ctx.marked_images, struct image_mark, mark) {
 		const char *img_src = mark->img->source;
 		if (strncmp(img_src, LDRSRC_STDIN, LDRSRC_STDIN_LEN) == 0 ||

@@ -84,7 +84,7 @@ void imglist_clear_marks(void);
 /**
  * Write the absolute path for each marked image to stdout.
  */
-void imglist_write_marked_paths(void);
+void imglist_print_marked_paths(void);
 
 /**
  * Find image instance by source path.

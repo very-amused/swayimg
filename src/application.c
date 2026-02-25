@@ -295,7 +295,7 @@ void app_destroy(void)
     slideshow_destroy();
     viewer_destroy();
     ui_destroy();
-		imglist_write_marked_paths();
+		imglist_print_marked_paths();
     imglist_destroy();
     info_destroy();
     font_destroy();

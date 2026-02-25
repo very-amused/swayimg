@@ -10,6 +10,7 @@
 #include "imglist.h"
 #include "info.h"
 #include "layout.h"
+#include "src/list.h"
 #include "tpool.h"
 #include "ui/ui.h"
 
@@ -420,6 +421,13 @@ static void thumb_resize(const char* params)
     }
 }
 
+/** Toggle thumbnail mark for writing to stdout: handle "mark" action
+ */
+static void thumb_mark(void)
+{
+	layout_mark_current(&ctx.layout);
+}
+
 /**
  * Draw thumbnail.
  * @param window destination window
@@ -599,6 +607,9 @@ static bool handle_action(const struct action* action)
         case action_thumb:
             thumb_resize(action->params);
             break;
+				case action_mark:
+						thumb_mark();
+						break;
         default:
             return false;
     }
@@ -697,6 +708,7 @@ static void on_deactivate(void)
     tpool_wait();
 }
 
+
 void gallery_init(const struct config* cfg, struct mode* handlers)
 {
     const struct config* section = config_section(cfg, CFG_GALLERY);
@@ -745,4 +757,7 @@ void gallery_init(const struct config* cfg, struct mode* handlers)
 void gallery_destroy(void)
 {
     keybind_free(ctx.kb);
+		// Write marked thumbnails to stdout
+		layout_write_marked_paths(&ctx.layout);
+		layout_clear_marks(&ctx.layout);
 }

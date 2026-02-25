@@ -536,6 +536,12 @@ Predefined names for mouse buttons/scroll:
 	Viewer mode only.
 	Export currently displayed image to PNG file.
 
+*mark*
+	Gallery mode only.
+	Mark the current image, causing its path to be written to stdout on
+	application exit. Each marked image will be written on its own line.
+	Enables swayimg to be used as a file picker or filter.
+
 *pause*
 	Slideshow mode only.
 	Pause/continue slideshow.

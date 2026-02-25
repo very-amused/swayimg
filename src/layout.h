@@ -6,11 +6,20 @@
 
 #include "image.h"
 
+/** Thumbnail instance marked for writing to stdout */
+struct layout_thumb_mark;
+
 /** Thumbnail instance with coordinates. */
 struct layout_thumb {
     struct image* img; ///< Linked image instance
     size_t x, y;       ///< Window coordinates
     size_t col, row;   ///< Column and row
+		struct layout_thumb_mark *mark; ///< Marked list entry for thumbnail (NULL if not marked)
+};
+
+struct layout_thumb_mark {
+	struct list list; // Links to next/prev marked thumbnail entries
+	struct layout_thumb *thumb;
 };
 
 /** Thumbnail layout scheme. */
@@ -26,6 +35,8 @@ struct layout {
     size_t thumb_padding;        ///< Padding of thumbnail (in pixels)
     size_t thumb_total;          ///< Total number of showed thumbnails
     struct layout_thumb* thumbs; ///< Visible thumbnails array
+
+		struct layout_thumb_mark* marked_thumbs; ///< Marked thumbnails linked list
 };
 
 /** Movement direction. */
@@ -105,6 +116,24 @@ struct layout_thumb* layout_get_at(struct layout* lo, size_t x, size_t y);
  * @return pointer to the list head, caller should free the list
  */
 struct image* layout_ldqueue(struct layout* lo, size_t preload);
+
+/**
+ * Toggle mark on currently selected thumbnail.
+ * @param lo pointer to the thumbnail layout
+ */
+void layout_mark_current(struct layout* lo);
+
+/**
+ * Clear thumbnail marks and free associated mark list entries.
+ * @param lo pointer to the thumbnail layout
+ */
+void layout_clear_marks(struct layout* lo);
+
+/**
+ * Write the absolute path for each marked thumbnail to stdout.
+ * @param lo pointer to the thumbnail layout
+ */
+void layout_write_marked_paths(struct layout* lo);
 
 /**
  * Clear thumbnails.

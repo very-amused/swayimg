@@ -70,6 +70,23 @@ struct image* imglist_load(const char* const* sources, size_t num);
 void imglist_remove(struct image* img);
 
 /**
+ * Toggle image mark.
+ * Marked images will have their path written to stdout at application exit. (mark action)
+ * @param img image instance to remove
+ */
+void imglist_mark(struct image* img);
+
+/**
+ * Clear all image marks and free associated list entries.
+ */
+void imglist_clear_marks(void);
+
+/**
+ * Write the absolute path for each marked image to stdout.
+ */
+void imglist_write_marked_paths(void);
+
+/**
  * Find image instance by source path.
  * @param source image source to search
  * @return image entry or NULL if source not found

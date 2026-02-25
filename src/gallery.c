@@ -425,7 +425,13 @@ static void thumb_resize(const char* params)
  */
 static void thumb_mark(void)
 {
-	layout_mark_current(&ctx.layout);
+	struct layout_thumb* thumb = layout_current(&ctx.layout);
+	assert(thumb);
+	struct image *img = thumb->img;
+	assert(img);
+
+	imglist_mark(img);
+	// TODO: Indicate marked images in UI some kind of way
 }
 
 /**
@@ -757,7 +763,4 @@ void gallery_init(const struct config* cfg, struct mode* handlers)
 void gallery_destroy(void)
 {
     keybind_free(ctx.kb);
-		// Write marked thumbnails to stdout
-		layout_write_marked_paths(&ctx.layout);
-		layout_clear_marks(&ctx.layout);
 }

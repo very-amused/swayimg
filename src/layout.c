@@ -79,7 +79,6 @@ void layout_init(struct layout* lo, size_t thumb_size, size_t thumb_padding)
 
 void layout_free(struct layout* lo)
 {
-		layout_clear_marks(lo);
     if (lo->thumbs) {
         free(lo->thumbs);
         lo->thumbs = NULL;
@@ -307,42 +306,6 @@ struct image* layout_ldqueue(struct layout* lo, size_t preload)
     }
 
     return queue;
-}
-
-// Toggle mark on currently selected thumbnail
-void layout_mark_current(struct layout* lo)
-{
-	struct layout_thumb *thumb = layout_current(lo);
-	assert(thumb);
-
-	struct layout_thumb_mark *mark = thumb->mark;
-	if (mark) {
-		lo->marked_thumbs = list_remove(mark);
-		thumb->mark = NULL;
-		free(mark);
-	} else {
-		mark = malloc(sizeof(struct layout_thumb_mark));
-		mark->thumb = thumb;
-		thumb->mark = mark;
-		lo->marked_thumbs = list_append(lo->marked_thumbs, mark);
-	}
-}
-
-void layout_clear_marks(struct layout* lo) {
-	// Free marked thumbnail entries
-	list_for_each(lo->marked_thumbs, struct layout_thumb_mark, mark) {
-		list_remove(mark);
-		free(mark);
-	}
-}
-
-void layout_write_marked_paths(struct layout* lo) {
-	list_for_each(lo->marked_thumbs, struct layout_thumb_mark, mark) {
-		struct layout_thumb *thumb = mark->thumb;
-		char *img_src = thumb->img->source;
-		// TODO: validate that img_src is a path before writing
-		printf("%s\n", img_src);
-	}
 }
 
 void layout_clear(struct layout* lo, size_t preserve)

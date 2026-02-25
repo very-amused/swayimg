@@ -66,7 +66,7 @@ void app_switch_mode(const char* name)
         const ssize_t index = str_index(mode_names, name, 0);
         if (index >= 0) {
             next = index;
-					// keep compatibility w/ existing undocumented behavior of `mode` (no param) switching to prev mode
+					// keep compatibility w/ existing behavior of `mode` (no param) switching to prev mode
         } else if (strcmp(name, "prev") != 0) {
             info_update(info_status, "Invalid mode: %s", name);
             app_redraw();

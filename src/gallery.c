@@ -11,6 +11,7 @@
 #include "info.h"
 #include "layout.h"
 #include "src/list.h"
+#include "src/pixmap.h"
 #include "tpool.h"
 #include "ui/ui.h"
 
@@ -432,6 +433,7 @@ static void thumb_mark(void)
 
 	imglist_mark(img);
 	// TODO: Indicate marked images in UI some kind of way
+	app_redraw();
 }
 
 /**
@@ -443,6 +445,7 @@ static void draw_thumbnail(struct pixmap* window,
                            const struct layout_thumb* lth)
 {
     const bool selected = (lth == layout_current(&ctx.layout));
+		const bool marked = lth->img->mark;
     const struct pixmap* pm = image_thumb_get(lth->img);
 
     // calculate tile position/size
@@ -515,14 +518,26 @@ static void draw_thumbnail(struct pixmap* window,
     }
 
     // draw border
-    if (selected && ARGB_GET_A(ctx.clr_border) && ctx.border_width > 0) {
-        const size_t border_x = bkg_x - ctx.border_width;
-        const size_t border_y = bkg_y - ctx.border_width;
-        const size_t border_w = bkg_w + ctx.border_width * 2;
-        const size_t border_h = bkg_h + ctx.border_width * 2;
-        pixmap_rect(window, border_x, border_y, border_w, border_h,
-                    ctx.border_width, ctx.clr_border);
-    }
+		const argb_t marked_border_color = 0xffff0fff; // TODO: add marked_border_color config var
+		const argb_t border_color = marked ? marked_border_color : ctx.clr_border;
+		if ((selected || marked) && ARGB_GET_A(border_color) > 0 && ctx.border_width > 0) {
+				const size_t border_x = bkg_x - ctx.border_width;
+				const size_t border_y = bkg_y - ctx.border_width;
+				const size_t border_w = bkg_w + ctx.border_width * 2;
+				const size_t border_h = bkg_h + ctx.border_width * 2;
+				pixmap_rect(window, border_x, border_y, border_w, border_h,
+											ctx.border_width, border_color);
+		}
+
+		// Draw mark indicator
+		if (marked) {
+				const size_t mark_ind_size = min(bkg_w, bkg_h) / 10;
+				const size_t ind_x = bkg_x + (bkg_w - mark_ind_size);
+				const size_t ind_y = bkg_y + (bkg_h - mark_ind_size);
+				const size_t ind_w = mark_ind_size;
+				const size_t ind_h = mark_ind_size;
+				pixmap_fill(window, ind_x, ind_y, ind_w, ind_h, marked_border_color);
+		}
 }
 
 /**

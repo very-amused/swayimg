@@ -98,6 +98,8 @@ padding = 5
 select = #404040ff
 # Background color of non-selected tiles (RGBA)
 background = #202020ff
+# Border color of marked tiles (RGBA)
+marked_color = "#18ff6bff"
 # Border color of the selected tile (RGBA)
 border_color = #aaaaaaff
 # Border width of the selected tile (pixels)
@@ -277,6 +279,7 @@ Return = mode viewer
 a = antialiasing
 r = reload
 i = info
+m = mark
 Equal = thumb +20
 Plus = thumb +20
 Minus = thumb -20

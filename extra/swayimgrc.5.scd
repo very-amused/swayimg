@@ -202,6 +202,9 @@ Configuration specific to the gallery mode: _[gallery]_.
 *background* = #COLOR
 	Background color of non-selected tiles, _#202020ff_ by default.
 
+*marked_color* = #COLOR
+	Border color of marked tiles, _#18ff6bff_ by default.
+
 *border_color* = #COLOR
 	Border color of the selected tile, _#aaaaaaff_ by default.
 

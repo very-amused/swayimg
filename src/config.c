@@ -71,6 +71,7 @@ static const struct configdef_kv def_gallery[] = {
     { CFG_GLRY_BKG,       "#202020ff" },
     { CFG_GLRY_SELECT,    "#404040ff" },
     { CFG_GLRY_BRD_COLOR, "#aaaaaaff" },
+		{ CFG_GLRY_MRK_COLOR, "#18ff6bff" },
     { CFG_GLRY_BRD_WIDTH, "5"         },
     { CFG_GLRY_SSCALE,    "1.15"      },
 };

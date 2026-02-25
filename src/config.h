@@ -77,6 +77,7 @@ struct config {
 #define CFG_GLRY_SELECT    "select"
 #define CFG_GLRY_BRD_COLOR "border_color"
 #define CFG_GLRY_BRD_WIDTH "border_width"
+#define CFG_GLRY_MRK_COLOR "mark_color"
 #define CFG_GLRY_SSCALE    "selected_scale"
 
 #define CFG_LIST_FROMFILE  "from_file"

@@ -46,6 +46,7 @@ struct gallery {
     argb_t clr_background; ///< Tile background
     argb_t clr_select;     ///< Selected tile background
     argb_t clr_border;     ///< Selected tile border
+		argb_t clr_marked;		 ///< Marked tile border and indicator
     size_t border_width;   ///< Selected tile border size
     double selected_scale; ///< Selected tile scale
 
@@ -432,7 +433,6 @@ static void thumb_mark(void)
 	assert(img);
 
 	imglist_mark(img);
-	// TODO: Indicate marked images in UI some kind of way
 	app_redraw();
 }
 
@@ -518,8 +518,7 @@ static void draw_thumbnail(struct pixmap* window,
     }
 
     // draw border
-		const argb_t marked_border_color = 0xffff0fff; // TODO: add marked_border_color config var
-		const argb_t border_color = marked ? marked_border_color : ctx.clr_border;
+		const argb_t border_color = marked ? ctx.clr_marked : ctx.clr_border;
 		if ((selected || marked) && ARGB_GET_A(border_color) > 0 && ctx.border_width > 0) {
 				const size_t border_x = bkg_x - ctx.border_width;
 				const size_t border_y = bkg_y - ctx.border_width;
@@ -536,7 +535,7 @@ static void draw_thumbnail(struct pixmap* window,
 				const size_t ind_y = bkg_y + (bkg_h - mark_ind_size);
 				const size_t ind_w = mark_ind_size;
 				const size_t ind_h = mark_ind_size;
-				pixmap_fill(window, ind_x, ind_y, ind_w, ind_h, marked_border_color);
+				pixmap_fill(window, ind_x, ind_y, ind_w, ind_h, border_color);
 		}
 }
 
@@ -757,6 +756,7 @@ void gallery_init(const struct config* cfg, struct mode* handlers)
     ctx.clr_background = config_get_color(section, CFG_GLRY_BKG);
     ctx.clr_select = config_get_color(section, CFG_GLRY_SELECT);
     ctx.clr_border = config_get_color(section, CFG_GLRY_BRD_COLOR);
+		ctx.clr_marked = config_get_color(section, CFG_GLRY_MRK_COLOR);
     ctx.border_width = config_get_num(section, CFG_GLRY_BRD_WIDTH, 0, 256);
     ctx.selected_scale =
         config_get_float(section, CFG_GLRY_SSCALE, 1.0f, 10.0f);

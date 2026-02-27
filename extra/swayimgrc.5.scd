@@ -443,8 +443,8 @@ Predefined names for mouse buttons/scroll:
 *fullscreen*
 	Toggle full-screen mode.
 
-*mode* [_viewer_|_slideshow_|_gallery_|_prev_]
-	Switch between modes. _prev_ or empty value to switch to previous mode.
+*mode* [_viewer_|_slideshow_|_gallery_]
+	Switch between modes. Empty value to switch to previous mode.
 
 *step_left* [PERCENT]
 	Viewer mode only.

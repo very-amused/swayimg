@@ -46,7 +46,7 @@ struct gallery {
     argb_t clr_background; ///< Tile background
     argb_t clr_select;     ///< Selected tile background
     argb_t clr_border;     ///< Selected tile border
-		argb_t clr_marked;		 ///< Marked tile border and indicator
+    argb_t clr_marked;     ///< Marked tile border and indicator
     size_t border_width;   ///< Selected tile border size
     double selected_scale; ///< Selected tile scale
 
@@ -427,13 +427,13 @@ static void thumb_resize(const char* params)
  */
 static void thumb_mark(void)
 {
-	struct layout_thumb* thumb = layout_current(&ctx.layout);
-	assert(thumb);
-	struct image *img = thumb->img;
-	assert(img);
+    struct layout_thumb* thumb = layout_current(&ctx.layout);
+    assert(thumb);
+    struct image* img = thumb->img;
+    assert(img);
 
-	imglist_mark(img);
-	app_redraw();
+    imglist_mark(img);
+    app_redraw();
 }
 
 /**
@@ -445,7 +445,7 @@ static void draw_thumbnail(struct pixmap* window,
                            const struct layout_thumb* lth)
 {
     const bool selected = (lth == layout_current(&ctx.layout));
-		const bool marked = lth->img->mark;
+    const bool marked = lth->img->mark;
     const struct pixmap* pm = image_thumb_get(lth->img);
 
     // calculate tile position/size
@@ -518,25 +518,26 @@ static void draw_thumbnail(struct pixmap* window,
     }
 
     // draw border
-		const argb_t border_color = marked ? ctx.clr_marked : ctx.clr_border;
-		if ((selected || marked) && ARGB_GET_A(border_color) > 0 && ctx.border_width > 0) {
-				const size_t border_x = bkg_x - ctx.border_width;
-				const size_t border_y = bkg_y - ctx.border_width;
-				const size_t border_w = bkg_w + ctx.border_width * 2;
-				const size_t border_h = bkg_h + ctx.border_width * 2;
-				pixmap_rect(window, border_x, border_y, border_w, border_h,
-											ctx.border_width, border_color);
-		}
+    const argb_t border_color = marked ? ctx.clr_marked : ctx.clr_border;
+    if ((selected || marked) && ARGB_GET_A(border_color) > 0 &&
+        ctx.border_width > 0) {
+        const size_t border_x = bkg_x - ctx.border_width;
+        const size_t border_y = bkg_y - ctx.border_width;
+        const size_t border_w = bkg_w + ctx.border_width * 2;
+        const size_t border_h = bkg_h + ctx.border_width * 2;
+        pixmap_rect(window, border_x, border_y, border_w, border_h,
+                    ctx.border_width, border_color);
+    }
 
-		// Draw mark indicator
-		if (marked) {
-				const size_t mark_ind_size = min(bkg_w, bkg_h) / 10;
-				const size_t ind_x = bkg_x + (bkg_w - mark_ind_size);
-				const size_t ind_y = bkg_y + (bkg_h - mark_ind_size);
-				const size_t ind_w = mark_ind_size;
-				const size_t ind_h = mark_ind_size;
-				pixmap_fill(window, ind_x, ind_y, ind_w, ind_h, border_color);
-		}
+    // Draw mark indicator
+    if (marked) {
+        const size_t mark_ind_size = min(bkg_w, bkg_h) / 10;
+        const size_t ind_x = bkg_x + (bkg_w - mark_ind_size);
+        const size_t ind_y = bkg_y + (bkg_h - mark_ind_size);
+        const size_t ind_w = mark_ind_size;
+        const size_t ind_h = mark_ind_size;
+        pixmap_fill(window, ind_x, ind_y, ind_w, ind_h, border_color);
+    }
 }
 
 /**
@@ -627,9 +628,9 @@ static bool handle_action(const struct action* action)
         case action_thumb:
             thumb_resize(action->params);
             break;
-				case action_mark:
-						thumb_mark();
-						break;
+        case action_mark:
+            thumb_mark();
+            break;
         default:
             return false;
     }
@@ -728,7 +729,6 @@ static void on_deactivate(void)
     tpool_wait();
 }
 
-
 void gallery_init(const struct config* cfg, struct mode* handlers)
 {
     const struct config* section = config_section(cfg, CFG_GALLERY);
@@ -755,7 +755,7 @@ void gallery_init(const struct config* cfg, struct mode* handlers)
     ctx.clr_window = config_get_color(section, CFG_GLRY_WINDOW);
     ctx.clr_background = config_get_color(section, CFG_GLRY_BKG);
     ctx.clr_select = config_get_color(section, CFG_GLRY_SELECT);
-		ctx.clr_marked = config_get_color(section, CFG_GLRY_MRK_COLOR);
+    ctx.clr_marked = config_get_color(section, CFG_GLRY_MRK_COLOR);
     ctx.clr_border = config_get_color(section, CFG_GLRY_BRD_COLOR);
     ctx.border_width = config_get_num(section, CFG_GLRY_BRD_WIDTH, 0, 256);
     ctx.selected_scale =

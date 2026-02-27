@@ -90,14 +90,15 @@ struct image {
     size_t file_size; ///< Size of the image file
     time_t file_time; ///< File modification time
 
-		struct image_mark* mark; /// Image marker for mark action (NULL if image is not marked)
+    struct image_mark*
+        mark; /// Image marker for mark action (NULL if image is not marked)
 
     struct imgdata* data; ///< Image data container
 };
 
 struct image_mark {
-	struct list list;	 ///< Links to next/prev marked image entries
-	struct image* img; ///< Linked image instance
+    struct list list;  ///< Links to next/prev marked image entries
+    struct image* img; ///< Linked image instance
 };
 
 /** Image loading status. */

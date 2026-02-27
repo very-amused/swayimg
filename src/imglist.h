@@ -71,8 +71,7 @@ void imglist_remove(struct image* img);
 
 /**
  * Toggle image mark.
- * Marked images will have their path written to stdout at application exit.
- * (mark action)
+ * Marked images will have their path written to stdout at application exit. (mark action)
  * @param img image instance to remove
  */
 void imglist_mark(struct image* img);

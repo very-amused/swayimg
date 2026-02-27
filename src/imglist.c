@@ -41,7 +41,7 @@ struct image_list {
     size_t size;          ///< Size of image list
     pthread_mutex_t lock; ///< List lock
 
-    struct image_mark* marked_images; //< Marked images linked list
+		struct image_mark* marked_images; //< Marked images linked list
 
     enum imglist_order order; ///< File list order
     bool reverse;             ///< Reverse order flag
@@ -532,7 +532,7 @@ void imglist_init(const struct config* cfg)
 
 void imglist_destroy(void)
 {
-    imglist_clear_marks();
+		imglist_clear_marks();		
 
     fs_monitor_destroy();
 
@@ -664,47 +664,42 @@ void imglist_remove(struct image* img)
     reindex();
 }
 
-void imglist_mark(struct image* img)
-{
-    struct image_mark* mark = img->mark;
+void imglist_mark(struct image* img) {
+	struct image_mark* mark = img->mark;
 
-    if (mark) {
-        // unmark image
-        ctx.marked_images = list_remove(mark);
-        img->mark = NULL;
-        free(mark);
-    } else {
-        // mark image
-        mark = malloc(sizeof(struct image_mark));
-        mark->img = img;
-        img->mark = mark;
-        ctx.marked_images = list_append(ctx.marked_images, mark);
-    }
+	if (mark) {
+		// unmark image
+		ctx.marked_images = list_remove(mark);
+		img->mark = NULL;
+		free(mark);
+	} else {
+		// mark image
+		mark = malloc(sizeof(struct image_mark));
+		mark->img = img;
+		img->mark = mark;
+		ctx.marked_images = list_append(ctx.marked_images, mark);
+	}
 }
 
-void imglist_clear_marks(void)
-{
-    list_for_each(ctx.marked_images, struct image_mark, mark) {
-        mark->img->mark = NULL;
-        ctx.marked_images = list_remove(mark);
-        free(mark);
-    }
+void imglist_clear_marks(void) {
+	list_for_each(ctx.marked_images, struct image_mark, mark) {
+		mark->img->mark = NULL;
+		ctx.marked_images = list_remove(mark);
+		free(mark);
+	}
 }
 
-void imglist_print_marked_paths(void)
-{
-    list_for_each(ctx.marked_images, struct image_mark, mark) {
-        const char* img_src = mark->img->source;
-        if (strncmp(img_src, LDRSRC_STDIN, LDRSRC_STDIN_LEN) == 0 ||
-            strncmp(img_src, LDRSRC_EXEC, LDRSRC_EXEC_LEN) == 0) {
-            fprintf(stderr,
-                    "WARNING: Unable to resolve filesystem path for mark %s\n",
-                    img_src);
-            continue;
-        }
+void imglist_print_marked_paths(void) {
+	list_for_each(ctx.marked_images, struct image_mark, mark) {
+		const char *img_src = mark->img->source;
+		if (strncmp(img_src, LDRSRC_STDIN, LDRSRC_STDIN_LEN) == 0 ||
+				strncmp(img_src, LDRSRC_EXEC, LDRSRC_EXEC_LEN) == 0) {
+			fprintf(stderr, "WARNING: Unable to resolve filesystem path for mark %s\n", img_src);
+			continue;
+		}
 
-        printf("%s\n", img_src);
-    }
+		printf("%s\n", img_src);
+	}
 }
 
 struct image* imglist_find(const char* source)

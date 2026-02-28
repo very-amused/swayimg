@@ -202,9 +202,6 @@ Configuration specific to the gallery mode: _[gallery]_.
 *background* = #COLOR
 	Background color of non-selected tiles, _#202020ff_ by default.
 
-*marked_color* = #COLOR
-	Border color of marked tiles, _#18ff6bff_ by default.
-
 *border_color* = #COLOR
 	Border color of the selected tile, _#aaaaaaff_ by default.
 
@@ -443,8 +440,8 @@ Predefined names for mouse buttons/scroll:
 *fullscreen*
 	Toggle full-screen mode.
 
-*mode* [_viewer_|_slideshow_|_gallery_]
-	Switch between modes. Empty value to switch to previous mode.
+*mode* [_viewer_|_slideshow_|_gallery_|_prev_]
+	Switch between modes. _prev_ or empty value to switch to previous mode.
 
 *step_left* [PERCENT]
 	Viewer mode only.
@@ -538,12 +535,6 @@ Predefined names for mouse buttons/scroll:
 *export* FILE
 	Viewer mode only.
 	Export currently displayed image to PNG file.
-
-*mark*
-	Gallery mode only.
-	Mark the current image, causing its path to be written to stdout on
-	application exit. Each marked image will be written on its own line.
-	Enables swayimg to be used as a file picker or filter.
 
 *pause*
 	Slideshow mode only.

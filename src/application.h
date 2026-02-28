@@ -44,8 +44,10 @@ bool app_run(void);
 void app_exit(int rc);
 
 /**
- * Switch mode (viewer/slideshow/gallery).
- * @param name name of the mode to set
+ * Switch mode (viewer/slideshow/gallery/prev).
+ * @param name name of the mode to set.
+ * `prev` will switch to the previous mode, or do nothing if we haven't switched
+ * modes at least once.
  */
 void app_switch_mode(const char* name);
 
